@@ -1,0 +1,71 @@
+# ============================
+# Python
+# ============================
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.pkl
+*.sqlite3
+
+# Byte-compiled / optimized / DLL files
+*.so
+*.dll
+*.dylib
+
+# ============================
+# Virtual Environments
+# ============================
+.venv/
+env/
+venv/
+ENV/
+
+# ============================
+# FastAPI / Uvicorn
+# ============================
+*.log
+logs/
+*.pid
+
+# ============================
+# Environment variables
+# ============================
+.env
+.env.*
+!env.example
+
+# ============================
+# Alembic
+# ============================
+alembic/versions/*.pyc
+alembic/versions/*_tmp.py
+alembic.ini~
+
+# ============================
+# VSCode
+# ============================
+.vscode/
+
+# ============================
+# OS files
+# ============================
+.DS_Store
+Thumbs.db
+
+# ============================
+# Testing
+# ============================
+.coverage
+htmlcov/
+pytest_cache/
+.pytest_cache/
+.unit_test_cache/
+
+# ============================
+# Distribution / packaging
+# ============================
+build/
+dist/
+*.egg-info/
+.eggs/
