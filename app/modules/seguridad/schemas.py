@@ -1,5 +1,6 @@
 from pydantic import BaseModel, EmailStr
 from typing import Optional, List
+from uuid import UUID
 
 class RoleCreate(BaseModel):
     name: str
@@ -14,7 +15,7 @@ class RoleRead(BaseModel):
     name: str
     description: Optional[str]
     class Config:
-        orm_mode = True
+        from_attributes = True
 
 class UserCreate(BaseModel):
     username: str
@@ -28,13 +29,13 @@ class UserUpdate(BaseModel):
 
 class UserRead(BaseModel):
     id: int
-    uuid: str
+    uuid: UUID
     username: str
     email: Optional[EmailStr]
     is_active: bool
     roles: Optional[List[RoleRead]] = []
     class Config:
-        orm_mode = True
+        from_attributes = True
 
 class Token(BaseModel):
     access_token: str

@@ -1,15 +1,16 @@
 from pydantic import BaseModel
 from typing import Optional
+from uuid import UUID
 
 class PaisCreate(BaseModel):
     nombre: str
 
 class PaisRead(BaseModel):
     id: int
-    uuid: str
+    uuid: UUID
     nombre: str
     class Config:
-        orm_mode = True
+        from_attributes = True
 
 
 class DepartamentoCreate(BaseModel):
@@ -18,11 +19,11 @@ class DepartamentoCreate(BaseModel):
 
 class DepartamentoRead(BaseModel):
     id: int
-    uuid: str
+    uuid: UUID
     nombre: str
     pais_id: int
     class Config:
-        orm_mode = True
+        from_attributes = True
 
 
 class ProvinciaCreate(BaseModel):
@@ -31,11 +32,11 @@ class ProvinciaCreate(BaseModel):
 
 class ProvinciaRead(BaseModel):
     id: int
-    uuid: str
+    uuid: UUID
     nombre: str
     departamento_id: int
     class Config:
-        orm_mode = True
+        from_attributes = True
 
 
 class MunicipioCreate(BaseModel):
@@ -44,11 +45,11 @@ class MunicipioCreate(BaseModel):
 
 class MunicipioRead(BaseModel):
     id: int
-    uuid: str
+    uuid: UUID
     nombre: str
     provincia_id: int
     class Config:
-        orm_mode = True
+        from_attributes = True
 
 
 class LocalidadCreate(BaseModel):
@@ -57,11 +58,11 @@ class LocalidadCreate(BaseModel):
 
 class LocalidadRead(BaseModel):
     id: int
-    uuid: str
+    uuid: UUID
     nombre: str
     municipio_id: int
     class Config:
-        orm_mode = True
+        from_attributes = True
 
 
 class RecintoCreate(BaseModel):
@@ -70,11 +71,11 @@ class RecintoCreate(BaseModel):
 
 class RecintoRead(BaseModel):
     id: int
-    uuid: str
+    uuid: UUID
     nombre: str
     localidad_id: int
     class Config:
-        orm_mode = True
+        from_attributes = True
 
 
 class MesaCreate(BaseModel):
@@ -84,9 +85,9 @@ class MesaCreate(BaseModel):
 
 class MesaRead(BaseModel):
     id: int
-    uuid: str
+    uuid: UUID
     numero: int
     recinto_id: int
     habilitada: bool
     class Config:
-        orm_mode = True
+        from_attributes = True

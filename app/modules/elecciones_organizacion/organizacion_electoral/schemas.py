@@ -1,6 +1,7 @@
 from pydantic import BaseModel
 from typing import Optional
 from datetime import date
+from uuid import UUID
 
 class PartidoCreate(BaseModel):
     nombre: str
@@ -8,11 +9,11 @@ class PartidoCreate(BaseModel):
 
 class PartidoRead(BaseModel):
     id: int
-    uuid: str
+    uuid: UUID
     nombre: str
     sigla: str
     class Config:
-        orm_mode = True
+        from_attributes = True
 
 
 class CargoCreate(BaseModel):
@@ -21,11 +22,11 @@ class CargoCreate(BaseModel):
 
 class CargoRead(BaseModel):
     id: int
-    uuid: str
+    uuid: UUID
     nombre: str
     descripcion: Optional[str]
     class Config:
-        orm_mode = True
+        from_attributes = True
 
 
 class CandidatoCreate(BaseModel):
@@ -36,13 +37,13 @@ class CandidatoCreate(BaseModel):
 
 class CandidatoRead(BaseModel):
     id: int
-    uuid: str
+    uuid: UUID
     nombres: str
     apellidos: str
     partido_id: Optional[int]
     cargo_id: Optional[int]
     class Config:
-        orm_mode = True
+        from_attributes = True
 
 
 class ProcesoCreate(BaseModel):
@@ -54,14 +55,14 @@ class ProcesoCreate(BaseModel):
 
 class ProcesoRead(BaseModel):
     id: int
-    uuid: str
+    uuid: UUID
     nombre: str
     fecha_inicio: date
     fecha_fin: date
     tipo: str
     estado: str
     class Config:
-        orm_mode = True
+        from_attributes = True
 
 
 class EleccionCreate(BaseModel):
@@ -72,10 +73,10 @@ class EleccionCreate(BaseModel):
 
 class EleccionRead(BaseModel):
     id: int
-    uuid: str
+    uuid: UUID
     proceso_id: int
     cargo_id: int
     descripcion: Optional[str]
     fecha: Optional[date]
     class Config:
-        orm_mode = True
+        from_attributes = True

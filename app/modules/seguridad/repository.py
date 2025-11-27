@@ -1,7 +1,8 @@
 from typing import Optional, List
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy import select
-from passlib.hash import bcrypt
+from sqlalchemy.orm import selectinload
+from app.core.security import hash_password
 from app.modules.seguridad import models, schemas
 
 class SeguridadRepository:
@@ -15,17 +16,17 @@ class SeguridadRepository:
         return r.scalar_one_or_none()
 
     async def get_user_by_id(self, user_id: int) -> Optional[models.User]:
-        q = select(models.User).where(models.User.id == user_id)
+        q = select(models.User).options(selectinload(models.User.roles)).where(models.User.id == user_id)
         r = await self.session.execute(q)
         return r.scalar_one_or_none()
 
     async def list_users(self) -> List[models.User]:
-        q = select(models.User)
+        q = select(models.User).options(selectinload(models.User.roles))
         r = await self.session.execute(q)
         return r.scalars().all()
 
     async def create_user(self, payload: schemas.UserCreate) -> models.User:
-        hashed = bcrypt.hash(payload.password)
+        hashed = hash_password(payload.password)
         obj = models.User(username=payload.username, email=payload.email, hashed_password=hashed)
         self.session.add(obj)
         await self.session.flush()
@@ -39,7 +40,7 @@ class SeguridadRepository:
         if payload.is_active is not None:
             user.is_active = payload.is_active
         if payload.password:
-            user.hashed_password = bcrypt.hash(payload.password)
+            user.hashed_password = hash_password(payload.password)
         self.session.add(user)
         await self.session.flush()
         await self.session.refresh(user)
@@ -99,7 +100,7 @@ class SeguridadRepository:
             user.roles.append(role)
             self.session.add(user)
             await self.session.flush()
-            await self.session.refresh(user)
+            await self.session.refresh(user, ['roles'])
             await self.session.commit()
         return user
 
@@ -108,6 +109,6 @@ class SeguridadRepository:
             user.roles.remove(role)
             self.session.add(user)
             await self.session.flush()
-            await self.session.refresh(user)
+            await self.session.refresh(user, ['roles'])
             await self.session.commit()
         return user

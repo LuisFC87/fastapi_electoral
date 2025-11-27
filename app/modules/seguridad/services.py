@@ -1,7 +1,6 @@
 from app.modules.seguridad.repository import SeguridadRepository
 from app.core.errors import BusinessException
-from app.core.security import create_access_token
-from passlib.hash import bcrypt
+from app.core.security import create_access_token, verify_password
 from datetime import timedelta
 
 class SeguridadService:
@@ -19,12 +18,12 @@ class SeguridadService:
 
     async def authenticate_user(self, username: str, password: str):
         user = await self.repo.get_user_by_username(username)
-        if not user or not bcrypt.verify(password, user.hashed_password):
+        if not user or not verify_password(password, user.hashed_password):
             return None
         return user
 
     async def create_token_for_user(self, user, expires_minutes: int = 60):
-        token = create_access_token(subject=str(user.id), expires_delta=timedelta(minutes=expires_minutes))
+        token = create_access_token(subject=str(user.id), expires_minutes=expires_minutes)
         return token
 
     # ----- admin / management -----
