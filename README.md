@@ -1,11 +1,24 @@
 FastAPI Electoral Project - v2
 
-Structure includes core (Postgres) and module elecciones_organizacion split into:
- - geografia_electoral
- - organizacion_electoral
+Es un sistema de gestión electoral basado en FastAPI. Utiliza un stack de Python moderno y asíncrono.
 
-Run instructions:
- - Configure .env with DATABASE_URL pointing to a Postgres instance
- - Install deps: pip install -r requirements/base.txt
- - Generate Alembic env and run migrations (alembic upgrade head)
- - Start: uvicorn app.main:app --reload
+Tecnologías Clave:
+
+Framework: FastAPI
+Base de Datos: PostgreSQL (con asyncpg)
+ORM: SQLAlchemy (asíncrono)
+Migraciones: Alembic
+Validación: Pydantic
+Arquitectura:
+
+Modular: Separado en un core para componentes compartidos y modules para la lógica de negocio.
+Enrutamiento Dinámico: Descubre e incluye automáticamente los endpoints de los módulos.
+Inyección de Dependencias: Usado extensivamente para servicios y sesiones de base de datos.
+Módulos Principales:
+
+seguridad:
+Autenticación de usuarios con JWT.
+Gestión de usuarios y roles con control de acceso (RBAC).
+elecciones_organizacion:
+geografia_electoral: Gestiona la jerarquía geográfica electoral (países, recintos, mesas, etc.).
+organizacion_electoral: Gestiona las entidades políticas (partidos, candidatos, elecciones, etc.).
