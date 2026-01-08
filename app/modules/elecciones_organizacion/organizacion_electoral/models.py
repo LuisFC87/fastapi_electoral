@@ -37,3 +37,10 @@ class Eleccion(Base, BaseMixin):
     cargo = relationship('Cargo')
     descripcion = Column(Text)
     fecha = Column(Date)
+
+#  No todos los candidatos del cargo participan en todas las elecciones
+class CandidatoEleccion(Base):
+    __tablename__ = 'candidatos_eleccion'
+    id = Column(Integer, primary_key=True)
+    candidato_id = Column(Integer, ForeignKey('candidatos.id'))
+    eleccion_id = Column(Integer, ForeignKey('elecciones.id'))
